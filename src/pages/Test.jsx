@@ -1,8 +1,8 @@
 import React from 'react'
 
-function TestPage() {
+function TestPage({title, name}) {
   return (
-    <div>Hello world!!</div>
+    <div>Hello world!! {title} {name}</div>
   )
 }
 
