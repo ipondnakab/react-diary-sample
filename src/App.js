@@ -1,14 +1,32 @@
-import TestPage from "./pages/Test";
+import HomePage from "./pages/Home";
+import CreatePage from "./pages/Create";
+import DiaryPage from "./pages/Diary";
+import EditPage from "./pages/Edit";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
+import Layouts from "./layouts";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <TestPage title={"title1"}/>
-      <TestPage title="title2" />
-      <TestPage name="name1" title="title3" />
-      <TestPage name="name2" />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layouts>
+              <HomePage />
+            </Layouts>
+          }
+        />
+        <Route path="/create" element={<CreatePage />} />
+        <Route path="/diary" element={<DiaryPage />} />
+        <Route path="/edit" element={<EditPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
