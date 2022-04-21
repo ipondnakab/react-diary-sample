@@ -58,6 +58,7 @@ function Layouts({ children }) {
           backgroundColor: "#f2f2f2",
           display: "flex",
           flexDirection: "column",
+          overflow: "scroll",
         }}
       >
         {children}
