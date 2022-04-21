@@ -1,13 +1,15 @@
 import React from "react";
 import { Sidebar, SidebarItem, Avatar } from "react-rainbow-components";
 import { useNavigate } from "react-router-dom";
-import { FcHome, FcAddImage } from "react-icons/fc";
+import { FcHome, FcAddImage, FcDownLeft } from "react-icons/fc";
 import { AiOutlineUser } from "react-icons/ai";
+import { useAuth } from "../providers/Auth";
 
 function Layouts({ children }) {
   const [selectedItem, setSelectedItem] = React.useState("");
   const navigate = useNavigate();
   const pathname = window.location.pathname;
+  const auth = useAuth();
 
   React.useEffect(() => {
     if (pathname === "/create") {
@@ -49,6 +51,14 @@ function Layouts({ children }) {
           label="Create"
           onClick={() => navigate("/create")}
           icon={<FcAddImage size={50} />}
+        />
+
+        <SidebarItem
+          style={{ position: "absolute", bottom: "0", width: "100%" }}
+          name="logout"
+          label="Logout"
+          onClick={auth.logout}
+          icon={<FcDownLeft size={50} />}
         />
       </Sidebar>
       <div

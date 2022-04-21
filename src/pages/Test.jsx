@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
 
-function TestPage({title, name}) {
+function TestPage({ title, name }) {
+  const functionLogTest = () => {
+    console.log("TestConsoleLog");
+  };
+
   return (
-    <div>Hello world!! {title} {name}</div>
-  )
+    <div onClick={functionLogTest}>
+      Hello world!! {title} {name}
+    </div>
+  );
 }
 
-export default TestPage
+export default TestPage;

@@ -1,11 +1,20 @@
 import React from "react";
-import { TimelineMarker, Card } from "react-rainbow-components";
+import { TimelineMarker } from "react-rainbow-components";
 function CardDiary({ title, date, content, onClick }) {
   return (
-    <TimelineMarker label={title} datetime={date} onClick={onClick}>
-      <Card title={title} style={{ padding: "16px" }}>
+    <TimelineMarker label={title} datetime={date}>
+      <div
+        title={title}
+        style={{
+          padding: "16px",
+          cursor: "pointer",
+          backgroundColor: "#fff",
+          borderRadius: "16px",
+        }}
+        onClick={onClick}
+      >
         {content}
-      </Card>
+      </div>
     </TimelineMarker>
   );
 }

@@ -6,15 +6,30 @@ import {
   Button,
   Card,
 } from "react-rainbow-components";
+import { useNavigate } from "react-router-dom";
+import { createDiary } from "../apis/diary";
 import Header from "../components/Header";
 
 function CreatePage() {
   const [date, setDate] = React.useState();
   const [title, setTitle] = React.useState();
   const [content, setContent] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const navigate = useNavigate();
 
-  const onSubmit = () => {
-    console.log({ date, title, content });
+  const onSubmit = async () => {
+    if (!date || !title || !content) {
+      return alert("Please fill all the fields");
+    }
+    setIsLoading(true);
+    try {
+      await createDiary({ date, title, content });
+      navigate("/");
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -26,6 +41,7 @@ function CreatePage() {
       <Input
         label="Title"
         labelAlignment="left"
+        placeholder="Title..."
         required
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -37,6 +53,7 @@ function CreatePage() {
         labelAlignment="left"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        required
       />
       <Card style={{ marginTop: "16px", padding: "16px" }}>
         <Calendar
@@ -50,6 +67,7 @@ function CreatePage() {
         label="Create"
         onClick={onSubmit}
         style={{ width: "100%", marginTop: "16px" }}
+        disabled={isLoading}
       />
     </div>
   );

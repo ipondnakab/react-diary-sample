@@ -7,46 +7,49 @@ import RegisterPage from "./pages/Register";
 import Layouts from "./layouts";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Auth from "./providers/Auth";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Layouts>
-              <HomePage />
-            </Layouts>
-          }
-        />
-        <Route
-          path="/create"
-          element={
-            <Layouts>
-              <CreatePage />
-            </Layouts>
-          }
-        />
-        <Route
-          path="/diary"
-          element={
-            <Layouts>
-              <DiaryPage />
-            </Layouts>
-          }
-        />
-        <Route
-          path="/edit"
-          element={
-            <Layouts>
-              <EditPage />
-            </Layouts>
-          }
-        />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Routes>
+      <Auth>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layouts>
+                <HomePage />
+              </Layouts>
+            }
+          />
+          <Route
+            path="/create"
+            element={
+              <Layouts>
+                <CreatePage />
+              </Layouts>
+            }
+          />
+          <Route
+            path="/diary/:id"
+            element={
+              <Layouts>
+                <DiaryPage />
+              </Layouts>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <Layouts>
+                <EditPage />
+              </Layouts>
+            }
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+      </Auth>
     </BrowserRouter>
   );
 }

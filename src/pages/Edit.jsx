@@ -1,51 +1,72 @@
 import React from "react";
-import { Input, Textarea, Button } from "react-rainbow-components";
+import { Input, Textarea, Button, Spinner } from "react-rainbow-components";
+import { editDiary, getDiaryById } from "../apis/diary";
 import Header from "../components/Header";
+import { useParams } from "react-router-dom";
 
 function EditPage() {
   const [title, setTitle] = React.useState();
   const [content, setContent] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const { id } = useParams();
 
   React.useEffect(() => {
-    setTitle("Hello world!!");
-    setContent(`Lorem Ipsum is simply dummy text of the printing and typesetting
-      industry. Lorem Ipsum has been the industry's standard dummy text
-      ever since the 1500s, when an unknown printer took a galley of type
-      and scrambled it to make a type specimen book. It has survived not
-      only five centuries, but also the leap into electronic typesetting,
-      remaining essentially unchanged. It was popularised in the 1960s
-      with the release of Letraset sheets containing Lorem Ipsum passages,
-      and more recently with desktop publishing software like Aldus
-      PageMaker including versions of Lorem Ipsum.`);
-  }, []);
+    const fetch = async () => {
+      setIsLoading(true);
+      try {
+        const res = await getDiaryById(id);
+        setTitle(res.title);
+        setContent(res.content);
+      } catch (error) {
+        alert(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetch();
+  }, [id]);
 
-  const onSubmit = () => {
-    console.log({ title, content });
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
+      await editDiary({ title, content, diaryId: id });
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div>
       <Header title="Edit Diary" subtitle="You can edit diary with this page" />
-      <Input
-        label="Title"
-        labelAlignment="left"
-        required
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <Textarea
-        label="Content"
-        rows={4}
-        placeholder="Content..."
-        labelAlignment="left"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <Button
-        label="Create"
-        onClick={onSubmit}
-        style={{ width: "100%", marginTop: "16px" }}
-      />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Input
+            label="Title"
+            labelAlignment="left"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Textarea
+            label="Content"
+            rows={4}
+            placeholder="Content..."
+            labelAlignment="left"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+          <Button
+            label="Edit"
+            onClick={onSubmit}
+            style={{ width: "100%", marginTop: "16px" }}
+          />
+        </>
+      )}
     </div>
   );
 }
