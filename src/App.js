@@ -20,9 +20,30 @@ function App() {
             </Layouts>
           }
         />
-        <Route path="/create" element={<CreatePage />} />
-        <Route path="/diary" element={<DiaryPage />} />
-        <Route path="/edit" element={<EditPage />} />
+        <Route
+          path="/create"
+          element={
+            <Layouts>
+              <CreatePage />
+            </Layouts>
+          }
+        />
+        <Route
+          path="/diary"
+          element={
+            <Layouts>
+              <DiaryPage />
+            </Layouts>
+          }
+        />
+        <Route
+          path="/edit"
+          element={
+            <Layouts>
+              <EditPage />
+            </Layouts>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
